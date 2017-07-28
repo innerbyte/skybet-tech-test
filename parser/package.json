@@ -1,0 +1,18 @@
+{
+  "name": "parser",
+  "version": "1.0.0",
+  "description": "skybet message parser",
+  "scripts": {
+    "start": "node ./src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vlad Isan",
+  "license": "MIT",
+  "dependencies": {
+    "amqplib": "^0.5.1",
+    "mongodb": "^2.2.30",
+    "nodemon": "^1.11.0",
+    "request": "^2.81.0",
+    "xml2js": "^0.4.17"
+  }
+}

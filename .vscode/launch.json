@@ -1,0 +1,86 @@
+{
+    // Use IntelliSense to learn about possible Node.js debug attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch connector with Nodemon",
+            "runtimeExecutable": "${workspaceRoot}/connector/node_modules/.bin/nodemon",
+            "runtimeArgs": [
+                "--inspect=5858"
+            ],
+            "env": {
+                "NODE_ENV": "dev"
+            },
+            "program": "${workspaceRoot}/connector/src/index.js",
+            "restart": true,
+            "port": 5858,
+            "protocol": "inspector",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "sourceMaps": true
+        },
+        {
+            "name": "Launch connector",
+            "type": "node",
+            "request": "launch",
+            "sourceMaps": true,
+            "env": {
+                "NODE_ENV": "dev"
+            },
+            "program": "${workspaceRoot}/connector/src/index.js"
+        },
+        {
+            "name": "Attach to connector",
+            "type": "node",
+            "request": "attach",
+            "port": 5858,
+            "protocol": "inspector",
+            "address": "localhost",
+            "restart": true,
+            "sourceMaps": true
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch parser with Nodemon",
+            "runtimeExecutable": "${workspaceRoot}/parser/node_modules/.bin/nodemon",
+            "runtimeArgs": [
+                "--inspect=5858"
+            ],
+            "env": {
+                "NODE_ENV": "dev"
+            },
+            "program": "${workspaceRoot}/parser/src/index.js",
+            "restart": true,
+            "port": 5858,
+            "protocol": "inspector",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "sourceMaps": true
+        },
+        {
+            "name": "Launch parser",
+            "type": "node",
+            "request": "launch",
+            "sourceMaps": true,
+            "env": {
+                "NODE_ENV": "dev"
+            },
+            "program": "${workspaceRoot}/parser/src/index.js"
+        },
+        {
+            "name": "Attach to parser",
+            "type": "node",
+            "request": "attach",
+            "port": 5858,
+            "protocol": "inspector",
+            "address": "localhost",
+            "restart": true,
+            "sourceMaps": true
+        }
+    ]
+}

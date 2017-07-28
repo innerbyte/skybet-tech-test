@@ -1,0 +1,37 @@
+version: '2'
+services:
+  rabbitmq:
+    image: rabbitmq:3.6.10-management
+    container_name: rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - "27018:27017"
+
+  provider:
+    image: sbgfeedme/provider:latest
+    container_name: provider
+    ports:
+      - "8181:8181"
+      - "8282:8282"
+
+  connector:
+    build:
+      context: ./connector
+    image: skybet/connector
+    container_name: connector
+    ports:
+      - "8383:8383"
+
+  parser:
+    build:
+      context: ./parser
+    image: skybet/parser
+    container_name: parser
+    ports:
+      - "8484:8484"
