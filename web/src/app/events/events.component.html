@@ -3,7 +3,7 @@
         <div class="card-header">
             <div class="row justify-content-between align-items-center">
                 <div class="col-12">
-                    <h4>Events</h4>
+                    <h4>{{ events[0].cat }} - {{ events[0].sub_cat }}</h4>
                 </div>
             </div>
         </div>
@@ -19,7 +19,7 @@
                          [paginator]="true"
                          [pageLinks]="5"
                          [totalRecords]="pagination.total_records"
-                         sortField="name"
+                         sortField="start_time"
                          selectionMode="single"
                          [(selection)]="selected_event"
                          (onLazyLoad)="on_lazy_load($event)">

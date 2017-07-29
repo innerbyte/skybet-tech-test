@@ -43,6 +43,33 @@ export class EventsService extends BaseService {
             });
     }
 
+    public get_markets(event_id: string, offset: number, limit: number, filter: string, sort_field: string, sort_order: number): Observable<any> {
+        let args: RequestOptionsArgs = {};
+
+        args.headers = this.get_headers();
+
+        let params = new URLSearchParams();
+        params.set('event_id', event_id);
+        params.set('limit', limit.toString(10));
+        params.set('offset', offset.toString(10));
+        params.set('filter', filter);
+        params.set('sort_field', sort_field);
+        params.set('sort_order', sort_order.toString(10));
+
+        args.params = params;
+
+        return this.get('/markets', args)
+            .map((res: IResponse) => {
+                return {
+                    events: res.data as IEvent[],
+                    pagination: res.pagination as Pagination
+                };
+            })
+            .catch(error => {
+                return Observable.throw(error);
+            });
+    }
+
     public get_categories(): Observable<any> {
         return this.get('/categories')
             .map((res: IResponse) => {

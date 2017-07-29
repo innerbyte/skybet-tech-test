@@ -1,10 +1,9 @@
 
 export interface IOutcome {
     _id: string;
-    cat: string;
-    sub_cat: string;
+    market_id: string;
     name: string;
-    start_time: Date;
+    price: string;
     displayed: boolean;
     suspended: boolean;
 }

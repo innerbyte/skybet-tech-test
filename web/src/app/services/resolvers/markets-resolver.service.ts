@@ -11,12 +11,12 @@ import {IEvent} from "../../../shared/interfaces/i-event";
 import {Pagination} from "../../../shared/interfaces/pagination";
 
 @Injectable()
-export class EventsResolver implements Resolve<any> {
+export class MarketsResolver implements Resolve<any> {
     private router: Router;
     private service: EventsService;
 
     public pagination: Pagination = new Pagination();
-    private sort_field = "start_time";
+    private sort_field = "name";
     private sort_order = 1;
     private _filter: string = '';
 
@@ -26,16 +26,15 @@ export class EventsResolver implements Resolve<any> {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-        let cat: string = null;
-        let sub_cat: string = null;
+        let event_id: string = null;
 
-        if (route.params.hasOwnProperty('cat') && route.params.hasOwnProperty('sub_cat')) {
-            cat = route.params['cat'];
-            sub_cat = route.params['sub_cat'];
+        if (route.params.hasOwnProperty('event_id')) {
+            event_id = route.params['event_id'];
 
-            return this.service.get_events(
-                cat,
-                sub_cat,
+            this.pagination.limit = 20;
+
+            return this.service.get_markets(
+                event_id,
                 this.pagination.offset,
                 this.pagination.limit,
                 this._filter,
@@ -49,13 +48,11 @@ export class EventsResolver implements Resolve<any> {
             .map(res => {
                 return {
                     events: res.events,
-                    pagination: res.pagination,
-                    cat: cat,
-                    sub_cat: sub_cat
+                    pagination: res.pagination
                 };
             });
         } else {
-            return Observable.of({events: [], pagination: new Pagination(), cat: cat, sub_cat: sub_cat} as any);
+            return Observable.of({events: [], pagination: new Pagination()} as any);
         }
     }
 }

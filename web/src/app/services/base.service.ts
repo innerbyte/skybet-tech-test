@@ -35,8 +35,6 @@ export class BaseService {
         if (args.headers == null)
             args.headers = this.get_headers();
 
-        console.log(this.url + url);
-
         return this.http.get(this.url + url, args)
             .map((res: Response) => {
                 return res.json() as IResponse

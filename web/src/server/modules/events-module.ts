@@ -24,7 +24,8 @@ export class EventsModule {
 
         let events_filter = {
             "cat_slug": cat,
-            "sub_cat_slug": sub_cat
+            "sub_cat_slug": sub_cat,
+            "displayed": true
         };
 
         let events_cur = Server.db.collection("events").find({});
@@ -41,6 +42,7 @@ export class EventsModule {
         }
 
         events_cur = events_cur.filter(events_filter);
+        events_cur = events_cur.project({ "markets": 0, "outcomes": 0 });
 
         let sort_obj = {};
         sort_obj[sort_field] = sort_order;
@@ -50,6 +52,41 @@ export class EventsModule {
         event_list.pagination.total_records = await events_cur.count(false);
 
         events_cur = events_cur.skip(offset).limit(limit);
+
+        event_list.events = await events_cur.toArray();
+
+        return event_list;
+    }
+
+    async get_markets(event_id: string, offset: number, limit: number, filter: string, sort_field: string, sort_order: number): Promise<IEventList> {
+        let event_list: IEventList = {
+            "events": [],
+            "pagination": {
+                "offset": offset,
+                "limit": limit,
+                "total_records": 0
+            }
+        };
+
+        let events_filter = {
+            "_id": event_id,
+            "displayed": true
+        };
+    
+        let events_cur = Server.db.collection("events").find({});
+
+        // if (filter && filter.length > 0) {
+        //     markets_filter["$elemMatch"]["name"] = {
+        //         $regex: `.*${filter}.*`,
+        //         $options: 'i'
+        //     };
+        // }
+
+        events_cur = events_cur.filter(events_filter);
+
+        event_list.pagination.total_records = await events_cur.count(false);
+
+        // events_cur = events_cur.skip(offset).limit(limit);
 
         event_list.events = await events_cur.toArray();
 
@@ -99,14 +136,4 @@ export class EventsModule {
 
         return cat_list;
     }
-
-    // async get_details(user_id: string): Promise<User> {
-    //     let users_cur = Server.db.collection("users");
-    //     let iuser: IUser = await users_cur.findOne({
-    //         "_id": new mongo.ObjectID(user_id)
-    //     });
-
-    //     let res_user = new User(iuser);
-    //     return res_user;
-    // }
 }

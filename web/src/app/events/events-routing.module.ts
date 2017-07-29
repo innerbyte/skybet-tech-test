@@ -2,8 +2,9 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {EventsComponent} from './events.component';
-// import {UserDetailsComponent} from './details/user-details.component';
+import {MarketsComponent} from './markets/markets.component';
 import {EventsResolver} from "../services/resolvers/events-resolver.service";
+import {MarketsResolver} from "../services/resolvers/markets-resolver.service";
 
 const routes: Routes = [
     {
@@ -18,39 +19,17 @@ const routes: Routes = [
                 data: {
                     bread: 'Events'
                 }
+            },
+            {
+                path: ':event_id',
+                component: MarketsComponent,
+                resolve: {
+                    res: MarketsResolver
+                },
+                data: {
+                    bread: 'Bets'
+                }
             }
-            // {
-            //     path: 'new',
-            //     component: UserDetailsComponent,
-            //     resolve: {
-            //         user: UserDetailsResolver
-            //     },
-            //     data: {
-            //         bread: 'User Details',
-            //         is_new: true
-            //     }
-            // },
-            // {
-            //     path: 'me',
-            //     component: UserDetailsComponent,
-            //     resolve: {
-            //         user: UserDetailsResolver
-            //     },
-            //     data: {
-            //         bread: 'User Details',
-            //         is_me: true
-            //     }
-            // },
-            // {
-            //     path: ':id',
-            //     component: UserDetailsComponent,
-            //     resolve: {
-            //         user: UserDetailsResolver
-            //     },
-            //     data: {
-            //         bread: 'User Details'
-            //     }
-            // }
         ]
     }
 ];
@@ -62,7 +41,8 @@ const routes: Routes = [
     declarations: [
     ],
     providers: [
-        EventsResolver
+        EventsResolver,
+        MarketsResolver
     ],
     exports: [
         RouterModule

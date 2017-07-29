@@ -33,6 +33,21 @@ router.get('/events', async (req: express.Request | any, res: express.Response, 
     res.json(Response.send_data(event_list.events, event_list.pagination));
 });
 
+router.get('/markets', async (req: express.Request | any, res: express.Response, next: express.NextFunction) => {
+    let module = new EventsModule();
+
+    let event_id = req.query.event_id;
+    let offset = parseInt(req.query.offset, 10);
+    let limit = parseInt(req.query.limit, 10);
+    let filter = req.query.filter;
+    let sort_field = req.query.sort_field;
+    let sort_order = parseInt(req.query.sort_order, 10);
+
+    let event_list: IEventList = await module.get_markets(event_id, offset, limit, filter, sort_field, sort_order);
+
+    res.json(Response.send_data(event_list.events, event_list.pagination));
+});
+
 router.get('/categories', async (req: express.Request | any, res: express.Response, next: express.NextFunction) => {
     let module = new EventsModule();
 

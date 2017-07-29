@@ -4,36 +4,35 @@
 
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {LazyLoadEvent} from "primeng/primeng";
-import {Pagination} from "../../shared/interfaces/pagination";
+import {Pagination} from "../../../shared/interfaces/pagination";
 import {Subject} from "rxjs/Subject";
 import {ActivatedRoute, NavigationExtras, Route, Router} from "@angular/router";
-import {EventsService} from "../services/events.service";
-import {IEvent} from "../../shared/interfaces/i-event";
+import {EventsService} from "../../services/events.service";
+import {IEvent} from "../../../shared/interfaces/i-event";
 
 import * as moment from "moment";
 
 @Component({
-    selector: 'events',
-    templateUrl: './events.component.html'
+    selector: 'markets',
+    templateUrl: './markets.component.html'
 })
-export class EventsComponent implements  OnInit, OnDestroy{
+export class MarketsComponent implements  OnInit, OnDestroy{
     private service: EventsService;
 
-    private rows_per_page: number = 10;
+    private rows_per_page: number = 20;
     public rows_per_page_opt: number[] = [5, 10, 20, 50];
 
     public cat: string = null;
     public sub_cat: string = null;
 
     public pagination: Pagination = new Pagination();
-    private sort_field = "start_time";
+    private sort_field = "name";
     private sort_order = 1;
     private _filter: string = '';
 
-    public events: IEvent[];
-    private _selected_event: IEvent;
+    public _event: IEvent;
 
-    private filter_subj = new Subject<string>();
+    // private filter_subj = new Subject<string>();
     private router: Router;
     private route: ActivatedRoute;
 
@@ -43,45 +42,47 @@ export class EventsComponent implements  OnInit, OnDestroy{
         this.route = route;
     }
 
-    get filter() {
-        return this._filter;
+    get event() {
+        return this._event;
     }
 
-    set filter(value) {
-        this._filter = value;
-        this.filter_subj.next(value);
+    set event(value) {
+        value.markets.forEach(m => {
+            m.outcomes = [];
+
+            Array.prototype.push.apply(m.outcomes, value.outcomes.filter((out) => {
+                return out.displayed && out.market_id === m._id;
+            }));
+
+            console.log(m.outcomes);
+        });
+
+        this._event = value;
     }
 
-    set selected_event(value) {
-        this._selected_event = value;
-        this.router.navigate([`./${this._selected_event._id}`], { relativeTo: this.route });
-    }
+    // get filter() {
+    //     return this._filter;
+    // }
 
-    on_lazy_load(event: LazyLoadEvent) {
-        this.pagination.offset = event.first || 0;
-        this.pagination.limit = event.rows || this.pagination.limit;
-
-        this.sort_field = event.sortField;
-        this.sort_order = event.sortOrder;
-
-        this.load_events();
-    }
+    // set filter(value) {
+    //     this._filter = value;
+    //     this.filter_subj.next(value);
+    // }
 
     format_date(date: number): string {
         return moment(date).format("DD/MM/YYYY HH:mm");
     }
 
-    load_events() {
-        this.service.get_events(
-            this.cat,
-            this.sub_cat,
+    load_markets() {
+        this.service.get_markets(
+            this.event._id,
             this.pagination.offset,
             this.pagination.limit,
             this._filter,
             this.sort_field,
             this.sort_order
         ).subscribe(res => {
-            this.events = res.events as IEvent[];
+            this.event = res.events[0] as IEvent;
             this.pagination = new Pagination(res.pagination);
         });
     }
@@ -89,18 +90,16 @@ export class EventsComponent implements  OnInit, OnDestroy{
     ngOnInit(): void {
         this.route.data.subscribe(data => {
             if (data.hasOwnProperty('res')) {
-                this.events = data.res.events;
+                this.event = data.res.events[0];
                 this.pagination = data.res.pagination;
-                this.cat = data.res.cat;
-                this.sub_cat = data.res.sub_cat;
             } else {
                 this.router.navigate(['/home']);
             }
         });
 
-        this.filter_subj.debounceTime(1200).subscribe((value) => {
-            this.load_events();
-        });
+        // this.filter_subj.debounceTime(1200).subscribe((value) => {
+        //     this.load_markets();
+        // });
     }
 
     ngOnDestroy(): void {

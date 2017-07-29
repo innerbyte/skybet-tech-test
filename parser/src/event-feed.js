@@ -35,7 +35,7 @@ class EventFeed extends Feed {
 
         this.name = this.name.replace(/\\\|/g , "");
 
-        this.start_time = new Date(parseInt(fields.get(cfg.constants.fields.START_TIME)));
+        this.start_time = parseInt(fields.get(cfg.constants.fields.START_TIME));
 
         this.displayed = parseInt(fields.get(cfg.constants.fields.DISPLAYED)) === 1;
         this.suspended = parseInt(fields.get(cfg.constants.fields.SUSPENDED)) === 1;
