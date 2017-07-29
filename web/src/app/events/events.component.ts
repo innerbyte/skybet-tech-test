@@ -98,7 +98,7 @@ export class EventsComponent implements  OnInit, OnDestroy{
             }
         });
 
-        this.filter_subj.debounceTime(1200).subscribe((value) => {
+        this.filter_subj.debounceTime(800).subscribe((value) => {
             this.load_events();
         });
     }

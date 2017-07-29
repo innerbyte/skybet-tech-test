@@ -53,8 +53,6 @@ export class MarketsComponent implements  OnInit, OnDestroy{
             Array.prototype.push.apply(m.outcomes, value.outcomes.filter((out) => {
                 return out.displayed && out.market_id === m._id;
             }));
-
-            console.log(m.outcomes);
         });
 
         this._event = value;

@@ -54,18 +54,23 @@ class _Server {
         this.app.use(express.static(path.join(this.root_path, 'dist')));
     }
 
-    private async setup_db() {
-        let url     = this.config.get_mongo_cfg(this.is_dev, this.is_test);
+    setup_db() {
+        return new Promise(async (resolve, reject) => {
+            let url     = this.config.get_mongo_cfg(this.is_dev, this.is_test);
 
-        console.log(`Connecting to mongodb on ${url}...`);
+            console.log(`Connecting to mongodb on ${url}...`);
 
-        try {
-            this.db = await mongo.MongoClient.connect(url);
+            try {
+                this.db = await mongo.MongoClient.connect(url);
 
-            console.log(`Successfully connected to MongoDB on ${url}!`);
-        } catch (err) {
-            console.log(`MongoDB connection error: ${err}`);
-        }
+                resolve(true);
+
+                console.log(`Successfully connected to MongoDB on ${url}!`);
+            } catch (err) {
+                console.log(`MongoDB connection error: ${err}`);
+                setTimeout(() => { this.setup_db(); }, 3000);
+            }
+        });
     }
 
     public close() {

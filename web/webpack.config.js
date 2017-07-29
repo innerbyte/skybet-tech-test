@@ -21,6 +21,9 @@ module.exports = function (options, wp_options) {
         console.log(`Running tests for ${options.client ? 'client' : 'server'}`);
     }
 
+    if (!!options.prod)
+        console.log(`Running build in ${options.prod}`);
+
     console.log("Building sources...");
 
     const env = {

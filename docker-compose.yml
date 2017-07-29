@@ -36,10 +36,10 @@ services:
     ports:
       - "8484:8484"
 
-  # web:
-  #   build:
-  #     context: ./web
-  #   image: skybet/web
-  #   container_name: web
-  #   ports:
-  #     - "8585:8585"
+  web:
+    build:
+      context: ./web
+    image: skybet/web
+    container_name: web
+    ports:
+      - "8585:8585"

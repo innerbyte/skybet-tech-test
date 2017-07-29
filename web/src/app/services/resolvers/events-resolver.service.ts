@@ -26,8 +26,8 @@ export class EventsResolver implements Resolve<any> {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-        let cat: string = null;
-        let sub_cat: string = null;
+        let cat: string = "";
+        let sub_cat: string = "";
 
         if (route.params.hasOwnProperty('cat') && route.params.hasOwnProperty('sub_cat')) {
             cat = route.params['cat'];

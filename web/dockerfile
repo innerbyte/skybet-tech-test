@@ -4,13 +4,15 @@ RUN mkdir -p /usr/src/app/dist
 
 WORKDIR /usr/src/app
 
-COPY ./dist ./dist
+COPY ./src ./src
+COPY ./config ./config
 COPY ./package.json ./package-lock.json ./
+COPY ./tsconfig* ./
+COPY webpack.config.js ./
 
 RUN npm install
-
-RUN ls -la /usr/src/app/*
+RUN npm run build
 
 EXPOSE 8585
 
-CMD ["node", "./dist/server.js"]
+CMD ["npm", "start"]
