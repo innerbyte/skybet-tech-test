@@ -3,6 +3,7 @@
 const Feed = require("./feed");
 const cfg = require("./config/config");
 const mongo = require("mongodb");
+const Util = require("./utilities");
 
 class EventFeed extends Feed {
     _properties() {
@@ -50,7 +51,9 @@ class EventFeed extends Feed {
         await col.insertOne({
             "_id": this._id,
             "cat": this.cat,
+            "cat_slug": Util.slugify(this.cat),
             "sub_cat": this.sub_cat,
+            "sub_cat_slug": Util.slugify(this.sub_cat),
             "name": this.name,
             "start_time": this.start_time,
             "displayed": this.displayed,
@@ -60,7 +63,9 @@ class EventFeed extends Feed {
         });
 
         await col.createIndex({ "cat": 1 });
+        await col.createIndex({ "cat_slug": 1 });
         await col.createIndex({ "sub_cat": 1 });
+        await col.createIndex({ "sub_cat_slug": 1 });
     }
 
     async update() {
@@ -71,7 +76,9 @@ class EventFeed extends Feed {
         {
             $set: {
                 "cat": this.cat,
+                "cat_slug": Util.slugify(this.cat),
                 "sub_cat": this.sub_cat,
+                "sub_cat_slug": Util.slugify(this.sub_cat),
                 "name": this.name,
                 "start_time": this.start_time,
                 "displayed": this.displayed,

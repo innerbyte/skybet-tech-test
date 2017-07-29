@@ -1,0 +1,38 @@
+<div class="animated fadeIn">
+    <div class="card">
+        <div class="card-header">
+            <div class="row justify-content-between align-items-center">
+                <div class="col-12">
+                    <h4>Events</h4>
+                </div>
+            </div>
+        </div>
+        <div class="card-block">
+            <div class="ui-widget-header" style="padding:4px 10px; border-bottom: 0 none;">
+                <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                <input type="text" size="50" placeholder="Filter..." [(ngModel)]="filter" />
+            </div>
+            <p-dataTable [value]="events"
+                         [lazy]="true"
+                         [rows]="pagination.limit"
+                         [rowsPerPageOptions]="rows_per_page_opt"
+                         [paginator]="true"
+                         [pageLinks]="5"
+                         [totalRecords]="pagination.total_records"
+                         sortField="name"
+                         selectionMode="single"
+                         [(selection)]="selected_event"
+                         (onLazyLoad)="on_lazy_load($event)">
+                <p-column field="start_time" header="Time" sortable="true">
+                    <ng-template let-event="rowData" pTemplate="body">
+                        <div class="text-center">
+                            {{ format_date(event.start_time) }}
+                        </div>
+                    </ng-template>
+                </p-column>
+                <p-column field="name" header="Event" sortable="true"></p-column>
+            </p-dataTable>
+
+        </div>
+    </div>
+</div>

@@ -55,6 +55,7 @@ class OutcomeFeed extends Feed {
             $push: {
                 "outcomes": {
                     "_id": this._id,
+                    "market_id": this.market_id,
                     "name": this.name,
                     "price": this.price,
                     "displayed": this.displayed,
@@ -64,6 +65,7 @@ class OutcomeFeed extends Feed {
         });
 
         await col.createIndex({ "outcomes._id": 1 });
+        await col.createIndex({ "outcomes.market_id": 1 });
     }
 
     async update() {
@@ -74,7 +76,7 @@ class OutcomeFeed extends Feed {
                     "_id": this.market_id
                 }
             },
-            "outcome": {
+            "outcomes": {
                 $elemMatch: {
                     "_id": this._id
                 }
@@ -84,6 +86,7 @@ class OutcomeFeed extends Feed {
             $set: {
                 "outcomes.$": {
                     "_id": this._id,
+                    "market_id": this.market_id,
                     "name": this.name,
                     "price": this.price,
                     "displayed": this.displayed,

@@ -1,0 +1,33 @@
+<div class="sidebar">
+    <nav class="sidebar-nav">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" routerLinkActive="active" [routerLink]="['/home']"><i
+                        class="icon-speedometer"></i>Home</a>
+            </li>
+
+            <li class="divider"></li>
+            <li class="nav-title">
+                Main
+            </li>
+            
+            <ng-container *ngFor="let cat of cat_list">
+                <li class="nav-item nav-dropdown open">
+                    <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-folder"></i> <strong>{{cat.name}}</strong></a>    
+
+                    <ul class="nav-dropdown-items">
+                        <li *ngFor="let sub_cat of cat.sub_categories" class="nav-item">
+                            <a class="nav-link" routerLinkActive="active" [routerLink]="['/' + format_cat(cat.name) + '/' + format_cat(sub_cat)]">
+                                <i class="icon-arrow-right-circle"></i>
+                                {{ sub_cat }}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ng-container>
+
+            <li class="divider"></li>
+
+        </ul>
+    </nav>
+</div>

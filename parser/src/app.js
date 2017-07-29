@@ -56,6 +56,9 @@ class _App {
             try {
                 this.db = await mongo.MongoClient.connect(this.mongo_url);
 
+                if (this.is_dev)
+                    await this.db.dropDatabase();
+
                 resolve(true);
 
                 console.log(`Successfully connected to MongoDB on ${this.mongo_url}!`);

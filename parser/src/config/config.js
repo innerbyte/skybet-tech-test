@@ -4,7 +4,7 @@ let config = {
     get_mongo_url(is_dev) {
         let host = is_dev ? "127.0.0.1" : "mongo";
         let port = is_dev ? "27018" : "27017";
-        let db = is_dev ? "skybet-feed-dev" : "skybet-feed";
+        let db = is_dev ? "skybet-feed" : "skybet-feed";
 
         return `mongodb://${host}:${port}/${db}`;
     },
