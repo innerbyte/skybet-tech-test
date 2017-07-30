@@ -1,6 +1,6 @@
 # SkyBet Tech Test
 
-This project is split into 3 modules: connector, parser & web.
+This project is split into 3 modules: **connector**, **parser** & **web**.
 
 * The **connector** module retrieves the packets from the mock data feed service and produces data to be consumed via **RabbitMQ** (provided in a docker container).
 * The **parser** module consumes the data, parses it and saves it into **MongoDB**.
