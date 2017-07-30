@@ -10,7 +10,7 @@ This project is split into 3 modules: connector, parser & web.
 
 * Install [Docker](https://docs.docker.com/engine/installation/) and [Docker Compose](https://docs.docker.com/compose/install/)
 * Start the **Docker** containers by typing `docker-compose up` in the root directory (where **docker-compose.yml** resides). This will build and start the **RabbitMQ**, **mongo**, **data feed**, **connector**, **parser** & **web** containers.
-* Once all the containers have started running, please open a browser and navigate to [http://localhost:8585] in order to test the data feed via the web interface.
+* Once all the containers have started running, please open a browser and navigate to <http://localhost:8585> in order to test the data feed via the web interface.
 *Please note that it might take a few moments for the feeds to show up in the UI, as they will usually be created with `displayed: false` and updated to `displayed: true` through **update** operations*
 * In order to close and destroy the environment, please press `CTRL + C` followed by `docker-compose down`.
 
