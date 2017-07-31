@@ -7,7 +7,7 @@ const {AotPlugin} = require('@ngtools/webpack');
  */
 module.exports = {
     entry: {
-        server: root('./src/spec/server/main.spec.ts')
+        server: root('./src/spec/web.spec.ts')
     },
     output: {
         filename: 'server.spec.js',

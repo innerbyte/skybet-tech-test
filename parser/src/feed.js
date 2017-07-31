@@ -13,6 +13,7 @@ class Feed {
     }
 
     constructor(app) {
+        this._properties();
         this.app = app;
     }
 
