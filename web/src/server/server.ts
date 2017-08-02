@@ -34,9 +34,11 @@ class _Server {
         await this.setup_db();
 
         this.server = http.createServer(this.app);
-        this.server.listen(this.config.port);
-
-        console.log(`server listening on port ${this.config.port}`);
+        
+        if (!this.is_test) {
+            this.server.listen(this.config.port);
+            console.log(`server listening on port ${this.config.port}`);
+        }
     }
 
     private setup_middleware(): void {

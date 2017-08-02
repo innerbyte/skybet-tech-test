@@ -1,5 +1,12 @@
 # SkyBet Tech Test
 
+---
+
+### Update 01/08/2017
+I have added a few unit tests across all modules, which can be run with `npm run test` in the individual folders. *Please note the tests require the **npm** modules to be installed in each of the modules. Furthermore, the web tests requires the containers loaded and running (in order to retrieve the entries from the API)*
+
+---
+
 This project is split into 3 modules: **connector**, **parser** & **web**.
 
 * The **connector** module retrieves the packets from the mock data feed service and produces data to be consumed via **RabbitMQ** (provided in a docker container).

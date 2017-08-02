@@ -1,7 +1,3 @@
-/**
- * Created by vlad on 03/04/17.
- */
-
 "use strict";
 
 import 'zone.js/dist/zone-node';

@@ -108,7 +108,7 @@ class App {
         let is_chunk = data.charAt(data.length - 1) !== EOL;
         let list = data.split(EOL);
 
-        if (list.length === 0) {
+        if (list.length === 0 || list[0] == data) {
             this.chunk_tmp = (this.chunk_tmp || "") + data;
             return;
         }
